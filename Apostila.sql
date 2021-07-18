@@ -1,3 +1,6 @@
+# Aprendizado: criando database e tabela
+show databases;
+create database shazam;
 USE shazam;
 
 CREATE TABLE funcionarios(
@@ -52,9 +55,11 @@ SELECT * FROM BANCOS;
 #########################################################
 #########################################################
 
-SELECT funcionarios.cod_func, funcionarios.nome, funcionarios.cod_depto, funcionarios.salário, funcionarios.dt_admissão, funcionarios.dt_nascto, funcionarios.cod_banco FROM funcionarios;
+SELECT funcionarios.cod_func, funcionarios.nome, funcionarios.cod_depto, 
+funcionarios.salário, funcionarios.dt_admissão, funcionarios.dt_nascto, funcionarios.cod_banco FROM funcionarios;
 
-SELECT fu.cod_func, fu.nome, fu.cod_depto, fu.salário, fu.dt_admissão, fu.dt_nascto, fu.cod_banco FROM funcionarios AS fu ;
+SELECT fu.cod_func, fu.nome, fu.cod_depto, fu.salário, fu.dt_admissão, 
+fu.dt_nascto, fu.cod_banco FROM funcionarios AS fu ;
 
 SELECT * FROM funcionarios;
 

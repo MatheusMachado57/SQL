@@ -1,4 +1,3 @@
-
 # Aprendizado: criando database e tabela
 show databases;
 create database shazam;
@@ -13,18 +12,17 @@ Gastos       decimal,
 Data_Compra  date
 );
 
-SELECT * FROM shazam.base_compras;
+DESC base_compras;
 
-INSERT INTO base_compras
-VALUES
-(152, 'Andre',    'Silva',    'MG', 351.50, '2018-01-22'),
-(222, 'Barbara',  'Toledo',   'SP', 250.10, '2018-05-15'),
-(451, 'Carlos',   'Pinheiro', 'MG', 455.00, '2017-02-05'),
-(754, 'Eduardo',  'Silva',    'SP', 390.10, '2018-04-10'),
-(897, 'Juliana',  'Oliveira', 'MG', 150.50, '2017-03-01'),
-(852, 'Maria',    'Lima',     'MG', 325.90, '2018-05-30'),
-(997, 'Ricardo',  'Pereira',  'MG', 332.59, '2018-05-25'),
-(535, 'Vanessa',  'Costa',    'SP', 241.57, '2017-04-30');
+INSERT INTO base_compras VALUES
+(152,   'Andre',    'Silva', 'MG', 351.00, '2018-01-22'),
+(222, 'Barbara',   'Toledo', 'SP', 250.00, '2018-05-15'),
+(451,  'Carlos', 'Pinheiro', 'MG', 455.00, '2017-02-05'),
+(754, 'Eduardo',    'Silva', 'SP', 390.00, '2018-04-10'),
+(897, 'Juliana', 'Oliveira', 'MG', 150.00, '2017-03-01'),
+(852,   'Maria',     'Lima', 'MG', 325.00, '2018-05-30'),
+(997, 'Ricardo',  'Pereira', 'MG', 332.00, '2018-05-25'),
+(535, 'Vanessa',    'Costa', 'SP', 241.00, '2017-04-30');
 
 SELECT * FROM shazam.base_compras;
 SELECT Id from base_compras;
