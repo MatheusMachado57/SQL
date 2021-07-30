@@ -1,0 +1,100 @@
+Aula 1 - Instalação do MySQL em Ubuntu e no CentOS
+
+Nessa aula, vamos mostrar como podemos instalar o MySQL em nosso sistema operacional Linux Ubuntu Server e no CentOS:
+
+A central de Donwlods do MySQL é:
+
+https://downloads.mysql.com/archives/community/
+
+Ubuntu:
+
+$ wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.deb 
+
+$ sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb 
+
+$ sudo apt update
+
+$ sudo apt-get install mysql-server
+
+Depois, vamos rodar ele no Systemctl:
+
+systemctl status mysql
+
+systemctl enable mysql
+
+Agora, vamos entrar na shell dele com usuário root nele:
+
+mysql -u root -p
+
+Depois vamos mudar a senha:
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+
+CentOS 8:
+
+yum localinstall https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+
+yum -y install @mysql
+
+# systemctl start mysqld
+
+# systemctl enable --now mysqld
+
+# systemctl status mysqld
+
+Agora para acessar o root, ele esta sem senha por padrão, mas vamos criar um para ele!
+
+mysql -u root -p
+
+Ou
+
+mysql -h localhost -u root -p
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+
+Para habilitar o acesso remoto do CentOS, use:
+
+firewall-cmd --permanent --zone=public --add-service=mysql
+
+Ou 
+
+firewall-cmd --permanent --zone=public --add-port=3306/tcp
+
+systemctl restart firewalld.service
+
+E pode testar via remoto
+
+mysql -h 10.0.15.25 -u root -p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
