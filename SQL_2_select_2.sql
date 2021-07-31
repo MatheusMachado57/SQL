@@ -21,62 +21,44 @@ insert into table_2 values
 (555, 'Matheus', 29, "M", 95.12, '2018-03-10',   'Corvinal'),
 (229,  'Angela', 90, "F", 23.76, '2015-06-03',  'Lufa-Lufa');
 
-select * 
-from table_2;
+select * from table_2;
 
-select table_1.id, table_1.nome, table_2.peso
-from table_1
-inner join table_2
-on table_1.id = table_2.id;
+select * from table_1 inner join table_2 on table_1.id = table_2.id;
+select table_1.id, table_1.nome, table_2.peso from table_1 inner join table_2 on table_1.id = table_2.id;
+select table_1.id, table_1.nome, table_2.peso from table_1  left join table_2 on table_1.id = table_2.id;
+select table_1.id, table_1.nome, table_2.peso from table_1 right join table_2 on table_1.id = table_2.id;
 
-select table_1.id, table_1.nome, table_2.peso
-from table_1
-left join table_2
-on table_1.id = table_2.id;
-
-select table_1.id, table_1.nome, table_2.peso
-from table_1
-right join table_2
-on table_1.id = table_2.id;
-
-select id, nome from table_1
-union
-select id, nome from table_2
-order by nome asc;
+select id, nome from table_1 union select id, nome from table_2 order by nome asc;
 
 # having is used to conditions after the group by, and the where is used before
-select idade, peso, estado
-from table_2
-where id > 100
-group by estado
-having peso > 0
-order by nome;
+select idade, peso, estado from table_2 where id > 100 group by estado having peso > 0 order by nome;
 
 # where exists return a subset
-select nome
-from table_1
-where exists
-(select idade 
-from table_1 
-where idade > 90);
+select nome from table_2 where exists (select idade from table_2 where idade < 40);
+select nome from table_2 where exists (select idade from table_2 where idade = 90);
+select nome from table_2 where exists (select idade from table_2 where nome = 'Andre');
+select nome from table_2 where exists (select idade from table_2 where nome = 'Antônio');
 
-select nome
-from table_1
-where idade < any
-(select nome
-from table_1
-where idade > 80);
+select distinct nome, peso, idade from table_1 
+       where exists (select * from table_2
+                     where table_1.nome = table_2.nome);
 
-##############################
+select distinct nome, peso, idade from table_1 
+       where not exists (select * from table_2
+                          where table_1.nome = table_2.nome);
+			
+select distinct nome, peso, idade from table_1
+  where not exists (select * from table_2 
+  where not exists (select * from table_1
+					where table_1.nome = table_2.nome));            
+
+select nome from table_1 where idade < any (select nome from table_1 where idade > 40);
 
 show table status like 'table_1';
 alter table table_1 engine = MyISAM;
 show table status like 'table_1';
 
-select * 
-from table_1 
-where estado = 'MG'
-order by field(nome, 'Andre', 'Ricardo', 'Carlos');
+select * from table_1 where estado = 'MG' order by field(nome, 'Andre', 'Ricardo', 'Carlos');
 
 select count(if(dayofweek(contr) = 7, 1, null)) as 'sábado', 
        count(if(dayofweek(contr) = 1, 1, null)) as 'domingo' from table_1;
@@ -92,22 +74,15 @@ create view xablau as select count(if(dayofweek(contr) in (1,7),1,null)) as 'dia
 
 select * from xablau;
 
-select max(idade)
-as 'idade máxima',
-estado
-from table_1
-group by estado;
+select max(idade) as 'idade máxima', estado from table_1 group by estado;
 
-#######################
 show table status like 'table_2';
 select * from table_2; 
 
-alter table table_2 
-add index idx_nome(nome);
+alter table table_2 add index idx_nome(nome);
 
 show indexes from table_2;
 
-############################
 alter table table_1 engine = InnoDB;
 
 select * from table_1;

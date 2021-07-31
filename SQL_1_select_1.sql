@@ -29,136 +29,68 @@ INSERT INTO table_1 VALUES
 (535, 'Vanessa', 'SP',   37, "F", 76.09, '2017-04-30'),
 (234,    'Alex', 'ES', NULL, "M",  NULL, '2016-03-04');
 
-select * 
-from table_1;
+select * from table_1;
 
-select nome, estado, idade, peso
-from table_1
-where sexo = 'M'
-and not estado = "SP"
-or peso > 40
-and idade between 20 and 50 
-and nome is not null
-order by peso, idade asc
-limit 2;
+select nome, estado, idade, peso      -- colunas chamadas
+from table_1                          -- tabela chamada
+where sexo = 'M'                      -- condição 1      
+and not estado = "SP"                 -- e condição 2
+or peso > 40                          -- ou condição 3
+and idade between 20 and 50           -- e condição 4
+and nome is not null                  -- e condição 5
+order by peso, idade asc              -- ordenado por
+limit 2;                              -- limite de linhas chamadas
 
-update table_1 
-set nome = 'Gilberto'
-where id = 152;
+select * from table_1;
+
+update table_1 set nome = 'Gilberto' where id = 152;
 
 select * from table_1;
 
 # delete from table_1;
-delete from table_1 
-where id = 152;
-
+delete from table_1 where id = 152;
 select * from table_1;
 
-select min(idade) 
-from table_1;
-
-select max(idade) as maior_idade
-from table_1;
-
-select count(peso)
-from table_1
-where idade > 40;
-
-select avg(peso)
-from table_1
-where idade > 40;
-
-select sum(peso)
-from table_1
-where idade > 40;
+select min(idade) as menor_idade, max(idade) as maior_idade from table_1;
+select count(peso) from table_1 where idade > 40;
+select avg(peso) from table_1 where idade > 40;
+select sum(peso) from table_1 where idade > 40;
 
 # Finds any values that start with "a"
-select *
-from table_1
-where nome
-like 'a%';
+select * from table_1 where nome like 'a%';
 
 # Finds any values that end with "a"
-select *
-from table_1
-where nome
-like '%a';
+select * from table_1 where nome like '%a';
 
 # Finds any values that have "or" in any position
-select *
-from table_1
-where nome
-like '%a%';
+select * from table_1 where nome like '%a%';
 
 # Finds any values that have "a" in the second position
-select *
-from table_1
-where nome
-like '_a%';
+select * from table_1 where nome like '_a%';
 
 # Finds any values that start with "a" and are at least 2 characters in length
-select *
-from table_1
-where nome
-like 'a__%';
+select * from table_1 where nome like 'a__%';
 
 # Finds any values that start with "a" and ends with "x"
-select *
-from table_1
-where nome
-like 'a%x';
+select * from table_1 where nome like 'a%x';
 
 # Finds any values that start with "a", "b" or "j"
-select *
-from table_1
-where idade
-like '[abj]%';
+select * from table_1 where idade like '[abj]%';
 
 # Finds any values that not start with "a", "b" or "j"
-select *
-from table_1
-where idade
-like '[!abj]%';
-
-select *
-from table_1
-where idade
-not like 'abj%';
+select * from table_1 where idade like '[!abj]%';
+select * from table_1 where idade not like 'abj%';
 
 # selects all customers that are named as "Barbara" or "Carlos"
-select * 
-from table_1
-where nome 
-in ('Barbara', 'Carlos');
+select * from table_1 where nome in ('Barbara', 'Carlos');
 
 # selects all customers that are not named as "Barbara" or "Carlos"
-select * 
-from table_1
-where nome 
-not in ('Barbara', 'Carlos');
+select * from table_1 where nome not in ('Barbara', 'Carlos');
 
 # ??
-select * 
-from table_1
-where nome 
-in (select estado from suppliers);
+select * from table_1 where nome in (select estado from suppliers);
 
 # Chamando a variável por outro nome;
-select nome
-as Nome, 
-idade
-as Idade, 
-peso
-as Peso
-from table_1;
-
-select nome, 
-peso + ', ' + idade 
-as Address
-from table_1;
- 
-select nome, 
-concat(id,', ', sexo,', ', Estado)
-as Address,
-idade
-from table_1;
+select nome as Nome, idade as Idade, peso as Peso from table_1;
+select nome, peso + idade as Address from table_1;
+select nome as Nome , concat(id,', ', sexo,', ', Estado) as Info, idade as Idade from table_1;
