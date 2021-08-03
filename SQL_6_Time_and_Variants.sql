@@ -1,3 +1,6 @@
+show databases;
+use shazam_0;
+
 create table work_days(
 year   int,
 week   int,
@@ -19,7 +22,6 @@ insert into boolean_values values(b'1');
 insert into boolean_values values(b'0');
 select * from boolean_values;
 
-########################################################
 create table tempo_val(
 t1   time,
 t2   time);
@@ -31,7 +33,6 @@ insert into tempo_val (t1, t2) values
 
 select * from tempo_val;
 
-########################################################
 create table data_val(d date);
 
 insert into data_val (d) values
@@ -39,16 +40,14 @@ insert into data_val (d) values
 ('1995-03-04'), 
 ('2000-09-09');
 
-select d from data_val;
+select d  from data_val;
 select d, date_format(d, '%d de %M de %Y') as 'dia por escrito' from data_val;
 select d, date_format(d, '%e/%c/%y %r') as 'dia por escrito e detalhes' from data_val;
 
-#########################################################
 select curdate(), curtime(), now();
 
 select curdate(), 
 date_add(curdate(), interval 3 day) as 'daqui a 3 dias', 
 date_sub(curdate(), interval 3 day) as '3 dias atrás'; 
 
-select curdate(), 
-date_add(now(), interval 84 hour) as 'daqui a 84 horas';
+select curdate(), date_add(now(), interval 84 hour) as 'daqui a 84 horas';

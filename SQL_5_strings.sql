@@ -1,4 +1,6 @@
-###########################################################
+show databases;
+use shazam_0;
+
 -- Aula 8 - Trabalhando com Strings
 
 CREATE TABLE temp_char (data CHAR(3));
@@ -30,13 +32,12 @@ INSERT INTO usuarios(id_usuario, preferencias) VALUES(1, '{"pag_tamanho": 10, "g
 
 SELECT preferencias FROM usuarios;
 
-INSERT INTO usuarios(id_usuario, preferencias) VALUES(2, 
+INSERT INTO usuarios(id_usuario, preferencias) VALUES
+(2, 
 JSON_OBJECT("pag_tam", 1, "network", 
 JSON_ARRAY("GSM", "CDMA", "WIFI")));
 
 SELECT preferencias FROM usuarios;
-
-
 
 create table temp2(hobbies set('travel', 'sport', 'fine dining', 'dancing'));
 insert into temp2 (hobbies) values (9);
@@ -50,11 +51,7 @@ properties json,
 browser json);
 
 insert into events2(event_name, visitor, properties, browser)
-values(
-'pageview',
-'l',
-'{"page":"/"}',
-'{ "name": "Safari", "os": "Mac", "resolution": {"x": 1920, "y": 1080}}');
+values('pageview', 'l', '{"page":"/"}', '{ "name": "Safari", "os": "Mac", "resolution": {"x": 1920, "y": 1080}}');
 
 select * from events2;
 
