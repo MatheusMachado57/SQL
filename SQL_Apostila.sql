@@ -80,7 +80,8 @@ SELECT * FROM table_func WHERE cod_banco is not null;
 SELECT * FROM table_func WHERE not cod_dept = 4;
 SELECT cod_dept, nome, total_funcs = (SELECT count() FROM table_func WHERE table_func.cod_dept = dept.cod_dept) FROM table_dept;
 SELECT cod_func, nome, agencia = (SELECT agencia FROM table_table_bancos WHERE table_table_bancos.cod_banco = table_func.cod_banco),
-			    conta_bancaria = (SELECT numero_banco FROM table_table_bancos WHERE table_table_bancos.cod_banco = table_func.cod_banco) FROM table_func;
+			    conta_bancaria = (SELECT numero_banco FROM table_table_bancos WHERE table_table_bancos.cod_banco = table_func.cod_banco) 
+                FROM table_func;
 
 SELECT * FROM table_bancos WHERE EXISTS (SELECT table_func.cod_banco FROM table_func WHERE table_func.cod_banco = table_bancos.cod_banco);
 SELECT * FROM table_bancos WHERE EXISTS (SELECT table_func.cod_banco FROM table_func WHERE table_func.cod_banco = table_bancos.cod_banco);
