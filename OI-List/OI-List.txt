@@ -1,0 +1,117 @@
+Answering Business Questions with SQL
+Be amazed by the power of your queries!
+Lucas Morato
+Lucas Morato
+
+Feb 26, 2020·5 min read
+
+Let SQL open your data drawers! Source
+Most of the data science related jobs require you to have strong SQL skills, and it makes sense as one of the most basic tasks you will have is to accurately manipulate data. We use SQL for many purposes, including exploratory data analysis, to create a filtered dataset of our data, or even to find insights about the business itself.
+
+Many of the SQL courses will give you an overview of how to design basic queries but is not that common that you will have the chance to practice writing queries based on real questions, using multiple tables and reproducing what we normally do as data analysts, so my goal on this tutorial is to show you how to do that using popular SQL functions like:
+
+CASE WHEN;
+SUB-QUERY;
+WINDOW FUNCTIONS;
+TEMPORARY TABLES.
+
+Before we start, you can find the datasets here, and the SQL file to follow along the tutorial is here.
+Understanding the data
+The first step is to have a nice understanding of what kind of data we have in our hands. For today, we will use data from transactions of a Brazilian online shop. Let’s have a look at how the database is organized:
+
+Database schema. Source
+There are 8 tables, all connected by at least one field. The data comprises around 100 thousand transactions, including information about customers, payments, products and orders. There’s room for a lot of possibilities, but we will focus on questions regarding sales amount. Let’s imagine your manager had asked you 3 questions:
+Who are the top buyers in each state and how much did they expend?
+How much is the average expense for people who left a negative review? What about positive reviews?
+How much, in percentage, the sales had increased or decreased over the months in 2017?
+To answer those questions I’m using SQL Server, one of the most popular SQL management systems. There are many other variants available, like PostgreSQL, SQLite and MySQL. The syntax can change a little bit, but the main concepts remain the same across the different languages.
+To use as a reference, below you can find the first row of the four tables we are going to use today. Take a moment to check the field and how the tables are connected.
+
+First row of tables customers, orders and orders items.
+Which are the top buyers in each state?
+For this query, we need to select the customer with the highest total purchases in each state. The data we need are in customers and order items tables, and we need to use orders as a connector. The approach we use in this case is to generate a sub-query within a window function to aggregate the result by State and select just the row with the maximum price.
+
+SELECT	customer, state, total_amount
+ FROM (
+	SELECT	
+		c.customer_id AS customer,
+		c.customer_state AS state,
+		SUM(oi.price) AS total_amount,
+		-- The line below creates the rank of top amount grouped by state
+		ROW_NUMBER() OVER (PARTITION BY c.customer_state
+			ORDER BY SUM(oi.price) DESC) AS row_order
+	FROM customers AS c
+	INNER JOIN orders AS o
+		ON c.customer_id = o.customer_id
+	INNER JOIN order_items AS oi
+		ON o.order_id = oi.order_id
+	GROUP BY c.customer_state, c.customer_id) AS sq
+-- The Where statement makes sure we are selecting just the top buyer
+WHERE row_order = 1 
+ORDER BY total_amount DESC;
+
+The query returns the top buyer from each of the 27 Brazilian States, below you can check the first five rows:
+
+Top buyer by State, first 5 rows. Source
+Average expense by sentiment
+Sentiment analysis is one of the trendy topics in data science, so you might need to classify it to perform analysis. We have a column with the review score, with a range from 1 to 5. For this example, we will assume that reviews with a score equal to 4 or 5 are positive and that anything else is negative. Next, we will calculate the average by each group, and for that, we need to use three tables: order_reviews, order_items and orders (again as a connector). We will use here a common table expression (CTE), it acts like a temporary table from which we can use the calculated fields to query, as we cannot use the average function directly.
+
+-- Question 2: average price by sentiment
+-- The Common Table Expression will act like a temporary table 
+WITH cte AS (
+		SELECT	oi.price AS order_price,
+		-- CASE WHEN will classify the score according to the criteria
+		-- we have definied
+		CASE WHEN review_score > 3 THEN 'positive'
+		ELSE 'negative' END AS sentiment
+	FROM orders AS o
+	INNER JOIN order_items AS oi
+		ON o.order_id = oi.order_id
+	INNER JOIN order_reviews AS r
+		ON o.order_id = r.order_id
+	)
+-- Now we just need to select the average price and group by the sentiment
+SELECT ROUND(AVG(order_price), 2) as avg_price, 
+	sentiment
+FROM cte 
+GROUP BY sentiment;
+
+The result we got shows that the price didn’t differ that much between the two sentiments. Interesting, isn’t it?
+
+Query result. Happy people are just 0.61 cents away from negative people. Source
+Sales over months in 2017
+For the last query, we need the table orders and order_items. The challenge is to get the total sales from previous months and then compare the difference with the actual month. The steps we need are:
+Create a CTE;
+Use LAG() to create a column with sales from the previous month;
+On the outer query, perform the calculation, using FORMAT() to get the results presented in a nice way
+
+-- Question 3: Sales performance over months in 2017
+WITH cte AS (
+SELECT 
+	MONTH(order_purchase_timestamp) AS month_,
+	-- Actual month
+	ROUND(
+		SUM(oi.price), 2) AS month_sales,
+	-- Previous Month
+	ROUND(
+		LAG(SUM(oi.price), 1) OVER(ORDER BY MONTH(order_purchase_timestamp)), 
+		2) AS previous_month
+FROM orders AS o
+INNER JOIN order_items AS oi
+	ON o.order_id = oi.order_id
+WHERE YEAR(order_purchase_timestamp) = 2017
+GROUP BY MONTH(order_purchase_timestamp)
+)
+SELECT
+	month_,
+	month_sales,
+	previous_month,
+	-- Format 'P' gives us the numbers with the "%" sign, rounded to 2 decimals
+	FORMAT((month_sales - previous_month)  / previous_month, 'P') vs_previous_month 
+FROM cte;
+
+And the result looks pretty easy to understand. Here you can visualize how volatile the sales were during 2017:
+
+Big increase in sales in February and November, this information can be used to plan stock levels and even to predict future revenue. Source
+And that’s it for today! In this tutorial, you have seen how just 3 simple questions can require a variety of functions that SQL offers to you. Query design is an amazing topic to explore, where many variants can have a strong influence, so it’s always a good subject to study.
+Would you make these queries differently? We are all here to learn, so please feel free to leave your comments or alternative queries on the comments. I hope you have enjoyed this text!
