@@ -120,9 +120,9 @@ select estado, sum(gastos) as gasto_total,
                group by estado 
                order by estado;
 
-select year(Data_Compra),
-       month(Data_Compra),
-       day(Data_Compra) 
+select year(Data_Compra) as Ano,
+       month(Data_Compra) as Mês,
+       day(Data_Compra) as Dia 
        from base_compras;
 
 select estado, year(Data_Compra) as Ano, 
@@ -166,9 +166,18 @@ SELECT * FROM shazam.base_id_not_null_v2;
 
 # Aprendizado: Soma Cumulativa
 
-SELECT *, SUM(Gastos) 
-OVER (PARTITION BY Estado order by Id, Estado) AS cum_amt 
+SELECT *, 
+       SUM(Gastos) OVER (PARTITION BY Estado order by Id, Estado) AS cum_amt 
 FROM base_compras;
+
+select Gastos,  
+       Estado,
+       min(Gastos) over(partition by Estado) as Min_do_Estado, 
+       max(Gastos) over(partition by Estado) as Max_do_Estado
+from base_compras_v2 
+order by Estado, Gastos;
+
+select * from base_compras_v2 order by Id;
 
 select t1.Id, t1.Gastos, SUM(t2.Gastos) as sum 
 from base_compras t1 
