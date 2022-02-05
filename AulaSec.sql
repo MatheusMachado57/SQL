@@ -60,6 +60,7 @@ SELECT * FROM base_compras_v2;
 SELECT * from base_compras ORDER BY Id DESC;
 SELECT * from base_compras ORDER BY Id ASC ;
 
+
 /*insere linha com valor nulo*/
 INSERT INTO base_compras_v2 
 VALUES (645, NULL, 'Ferreira', NULL, 555.57, '2018-05-05', NULL);
@@ -186,5 +187,44 @@ on t1.Id >= t2.Id
 group by t1.Id, t1.Gastos 
 order by t1.id;
 
-
+create table tb_metas_periodo_1 as
+SELECT `tb_metas_periodo`.`Exercicio`,
+    `tb_metas_periodo`.`UP_Cod`,
+    `tb_metas_periodo`.`UP_Sigla`,
+    `tb_metas_periodo`.`Programa_Cod`,
+    `tb_metas_periodo`.`Programa_Titulo_80`,
+    `tb_metas_periodo`.`Acao_Cod`,
+    `tb_metas_periodo`.`Acao_Titulo_80`,
+    `tb_metas_periodo`.`Produto_Cod`,
+    `tb_metas_periodo`.`Produto_Titulo_80`,
+    `tb_metas_periodo`.`Produto_Unid_de_Medida_45`,
+    `tb_metas_periodo`.`Regiao_Estadual_Titulo_45`,
+    `tb_metas_periodo`.`Municipio_Titulo_45`,
+    cast(replace(`Meta_Prevista`, ',','.') as decimal (20,2)) as meta_prevista,
+    cast(replace(`Meta_Adequada`, ',','.') as decimal (20,2)) as meta_adequada,
+    cast(replace(`Total_Realizado_no_Periodo`, ',','.') as decimal (20,2)) as total_realizado_periodo,
+    `tb_metas_periodo`.`Periodo`,
+    `tb_metas_periodo`.`Situacao`,
+    UP_Ind_Bloq,
+    UO_Ind_Bloq,
+    Programa_Ind_Bloq,
+    Acao_Ind_Bloq,
+    Acao_Trinca_UO_Func_UP_Inativa,
+    Acao_Par_Acao_Prod_Inativo,
+    Prod_Ind_Bloq,
+    Produto_Metas_Somaveis,
+    Produto_Regionalizavel,
+    Produto_Aceita_Estado,
+    Produto_Meta_Agregada
+    FROM `tb_stage`.`tb_metas_periodo`
+    where  UP_Ind_Bloq = 'Não' and
+    UO_Ind_Bloq = 'Não' and
+    Programa_Ind_Bloq = 'Não' and
+    Acao_Ind_Bloq = 'Não' and
+    Acao_Trinca_UO_Func_UP_Inativa = 'Não' and
+    Acao_Par_Acao_Prod_Inativo = 'Não' and
+    Prod_Ind_Bloq = 'Não';
+    
+	SET SQL_SAFE_UPDATES=0;
+    UPDATE tb_metas_periodo_1  SET Periodo=0 WHERE Periodo is null;
 
