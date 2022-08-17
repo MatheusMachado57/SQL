@@ -26,9 +26,16 @@
 # but we've hired a few more people, who haven't yet been assigned a building.
 
 use bolt;
+INSERT INTO Employees VALUES
+('Engineer', 'Yancy I.', null, null),
+('Artist',	 'Oliver P.', null, null);
+
 select * from buildings;
 select * from employees;
 
 # Exercise 8 — Tasks
 # Find the name and role of all employees who have not been assigned to a building
+SELECT * FROM employees where Building is null;
+
 # Find the names of the buildings that hold no employees
+select * from Buildings left join employees on Building = Building_name where Name is null;
