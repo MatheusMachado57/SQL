@@ -78,5 +78,10 @@ select * from Employees;
 
 # Exercise 7 — Tasks
 # Find the list of all buildings that have employees
+select * from Employees left join Buildings on Building = Building_name;
+
 # Find the list of all buildings and their capacity
+select distinct Building, Capacity from employees left join Buildings on Building = Building_name;
+
 # List all buildings and the distinct employee roles in each building (including empty buildings)
+select * from Buildings left join employees on Building = Building_name;

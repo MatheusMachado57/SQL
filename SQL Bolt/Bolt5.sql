@@ -77,5 +77,10 @@ select * from Boxoffice;
 
 # Exercise 6 — Tasks
 # Find the domestic and international sales for each movie
+select Title, Domestic_sales, International_sales from Movies inner join Boxoffice on Id = Movie_id;
+
 # Show the sales numbers for each movie that did better internationally rather than domestically
+select * from Movies inner join Boxoffice on Id = Movie_id where International_sales > Domestic_sales order by International_sales;
+
 # List all the movies by their ratings in descending order
+select * from Movies inner join Boxoffice on Id = Movie_id order by Rating desc;
