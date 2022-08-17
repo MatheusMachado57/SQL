@@ -51,7 +51,16 @@ select * from North_american_cities;
 
 # Review 1 — Tasks
 # List all the Canadian cities and their populations
+select City, Population from North_american_cities where Country = "Canada";
+
 # Order all the cities in the United States by their latitude from north to south
+select * from North_american_cities where Country = "United States" order by Latitude desc;
+
 # List all the cities west of Chicago, ordered from west to east
+select * from North_american_cities where Longitude < -87.629797 order by Longitude desc;
+
 # List the two largest cities in Mexico (by population)
+select * from North_american_cities where Country = "Mexico" order by Population desc limit 2;
+
 # List the third and fourth largest cities (by population) in the United States and their population
+select * from North_american_cities where Country = "United States" order by Population desc limit 2 offset 2;

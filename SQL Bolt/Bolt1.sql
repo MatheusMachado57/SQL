@@ -64,10 +64,19 @@ INSERT INTO Movies VALUES
 select * from Movies;
 
 # Exercise 1 — Tasks
-# Find the title of each film
-# Find the director of each film
-# Find the title and director of each film
-# Find the title and year of each film
-# Find all the information about each film
 
+# Find the title of each film
+select Title from Movies;
+
+# Find the director of each film
+select director from Movies;
+
+# Find the title and director of each film
+select Title, director from Movies;
+
+# Find the title and year of each film
+select Title, Year from Movies; 
+
+# Find all the information about each film
+select * from Movies;
 
