@@ -36,6 +36,8 @@
 # Exercise
 # Using the right constraints, find the information we need from the Movies table for each task below.
 
+use Bolt;
+
 select * from Movies;
 
 # Exercise 2 — Tasks

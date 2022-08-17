@@ -36,6 +36,8 @@
 # shows all the properties of each movie. To continue onto the next lesson, alter the query to find 
 # the exact information we need for each task.
 
+use Bolt;
+
 create table Movies(
 Id	              int, 
 Title	          varchar(50),
