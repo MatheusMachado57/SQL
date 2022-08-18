@@ -35,5 +35,10 @@ use bolt;
 
 # Exercise 11 — Tasks
 # Find the number of Artists in the studio (without a HAVING clause)
+SELECT count(*) FROM employees where Role = 'Artist';
+
 # Find the number of Employees of each role in the studio
+SELECT count(Role), Role FROM employees group by Role;
+
 # Find the total number of years employed by all Engineers
+SELECT sum(Years_employed) FROM employees group by Role having Role = "Engineer" ;
