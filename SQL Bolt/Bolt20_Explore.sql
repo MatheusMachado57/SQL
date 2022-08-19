@@ -2,6 +2,10 @@ use bolt;
 
 select * from north_american_cities;
 
+select * from north_american_cities where City like '%R%';
+select * from north_american_cities where Population between 3000000 and 9000000;
+select * from north_american_cities where Country in ('Canada');
+
 select * 
 from north_american_cities
 where Population > 
@@ -16,5 +20,4 @@ alter table north_american_cities add column porc double;
 select sum(Population) from north_american_cities;
 update north_american_cities set porc = 38688645;
 update north_american_cities set porc = Population/porc;
-
 
