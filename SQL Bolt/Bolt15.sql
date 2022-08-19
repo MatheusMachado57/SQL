@@ -98,3 +98,10 @@
 # – Version A number (floating point) of the latest version of this database
 # – Download_count An integer count of the number of times this database was downloaded
 # This table has no constraints.
+
+use bolt;
+
+create table database_0(
+Name            varchar(5),
+version         float,
+download_count  int);
