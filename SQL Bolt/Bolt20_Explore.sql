@@ -10,15 +10,24 @@ select * from north_american_cities where Country in ('Canada');
 select * from north_american_cities
 where Population > (select avg(Population) from north_american_cities);
 
-select City, Population, Population/(SELECT SUM(Population) 
-FROM north_american_cities)*100 as '%Pop' from north_american_cities;
+select City, Population, Population/(SELECT SUM(Population) FROM north_american_cities)*100 as '%Pop' from north_american_cities;
 
 alter table north_american_cities drop column porc;
 alter table north_american_cities add column porc double;
-select sum(Population) from north_american_cities;
-update north_american_cities set porc = 38688645;
-update north_american_cities set porc = Population/porc;
-# update north_american_cities set porc = (Population/(SELECT SUM(Population) FROM north_american_cities)*100);
+
+create table North_american_cities2(
+City	      varchar(50),
+Country	      varchar(50),
+Population	  int,
+Latitude	  float8,
+Longitude     float8,
+porc          float4);
+
+INSERT INTO north_american_cities2
+SELECT *, (Population / (SELECT SUM(Population) FROM north_american_cities)) * 100 as porcentagem
+FROM north_american_cities;
+
+select * from north_american_cities2;
 
 select * from employees where ucase(Role) = 'Manager';
 select lcase(Role) from employees where lcase(Role) = 'Manager';

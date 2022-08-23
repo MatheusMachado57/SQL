@@ -26,6 +26,7 @@
 # Once you're done, continue onto the next lesson to learn about queries that span 
 # multiple tables.
 
+drop table North_american_cities;
 create table North_american_cities(
 City	      varchar(50),
 Country	      varchar(50),
@@ -33,7 +34,7 @@ Population	  int,
 Latitude	  float8,
 Longitude     float8);
 
-INSERT INTO North_american_cities VALUES
+INSERT INTO North_american_cities(City, Country, Population, Latitude, Longitude) VALUES
 ('Guadalajara', 'Mexico',	1500800,	20.659699,	-103.349609),
 ('Toronto', 'Canada',	2795060,	43.653226,	-79.383184),
 ('Houston', 'United States',	2195914,	29.760427,	-95.369803),
