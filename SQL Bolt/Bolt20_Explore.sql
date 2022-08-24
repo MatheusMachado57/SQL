@@ -28,6 +28,7 @@ SELECT *, (Population / (SELECT SUM(Population) FROM north_american_cities)) * 1
 FROM north_american_cities;
 
 select * from bolt.north_american_cities2;
+select round(sum(porc),4) from bolt.north_american_cities2;
 
 select * from employees where ucase(Role) = 'Manager';
 select lcase(Role) from employees where lcase(Role) = 'Manager';
