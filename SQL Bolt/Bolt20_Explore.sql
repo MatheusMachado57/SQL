@@ -27,7 +27,7 @@ INSERT INTO north_american_cities2
 SELECT *, (Population / (SELECT SUM(Population) FROM north_american_cities)) * 100 as porcentagem
 FROM north_american_cities;
 
-select * from north_american_cities2;
+select * from bolt.north_american_cities2;
 
 select * from employees where ucase(Role) = 'Manager';
 select lcase(Role) from employees where lcase(Role) = 'Manager';
