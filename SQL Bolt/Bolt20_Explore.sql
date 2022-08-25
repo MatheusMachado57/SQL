@@ -38,3 +38,6 @@ select * from buildings where building_name in (select building from employees w
 
 select * from employees E, buildings B where B.Building_name = E.Building;
 select B.Building_name, E.Building from employees E, buildings B where B.Building_name = E.Building;
+
+SELECT CAST((100.5) as DECIMAL(10,2)) as NUMERO;
+select cast((Latitude) as DECIMAL(10,2)) as NUMERO from north_american_cities;
