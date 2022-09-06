@@ -12,7 +12,7 @@
 # but each implementation can differ in the additional features and storage types it supports.
 
 # Relational databases
-# Before learning the SQL syntax, it's important to have a model for what a relational database actually is.
+# Before learning the SQL syntax, its important to have a model for what a relational database actually is.
 # A relational database represents a collection of related (two-dimensional) tables. Each of the tables are 
 # similar to an Excel spreadsheet, with a fixed number of named columns (the attributes or properties of the table) 
 # and any number of rows of data.
@@ -57,7 +57,7 @@ select * from Vehicles;
 # and create new tables from scratch.
 
 # Each lesson will introduce a different concept and end with an interactive exercise. 
-# Go at your pace and don't be afraid to spend time experimenting with the exercises before continuing! 
+# Go at your pace and don t be afraid to spend time experimenting with the exercises before continuing! 
 # If you happen to be familiar with SQL already, you can skip ahead using the links in the top-right, 
 # but we would recommend you work through the lessons anyways!
 
